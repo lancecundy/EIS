@@ -1,3 +1,5 @@
+# Just a comment to test git
+
 library(tidyverse)
 
 CPIdata <- fread('https://download.bls.gov/pub/time.series/cu/cu.data.1.AllItems')
