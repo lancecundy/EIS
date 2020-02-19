@@ -1,5 +1,3 @@
-
-
 # cd "/extra/agalvao/eis_nielsen"
 
 rm(list = ls())
@@ -12,7 +10,9 @@ library(lubridate)
 print("1")
 
 #Trips <- read.csv('UseData/GroceryTripsSmall.csv')
-Trips <- read.csv('Datasets/GroceryTrips.csv')
+#Trips <- read.csv('Datasets/GroceryTrips.csv')
+Trips <- read.csv('../Datasets/GroceryTrips_sample_small.csv')
+
 
 Trips$projection_factor_magnet <- ifelse(is.na(Trips$projection_factor_magnet), 0, Trips$projection_factor_magnet)
 
