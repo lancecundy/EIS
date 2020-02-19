@@ -13,11 +13,10 @@ print("1")
 #Trips <- read.csv('Datasets/GroceryTrips.csv')
 Trips <- read.csv('../Datasets/GroceryTrips_sample_small.csv')
 
-
 Trips$projection_factor_magnet <- ifelse(is.na(Trips$projection_factor_magnet), 0, Trips$projection_factor_magnet)
 
 #WeeklyIR <- read.csv('UseData/WTB4WK.csv')
-WeeklyIR <- read.csv('EIS/UseData/WTB4WK.csv')
+WeeklyIR <- read.csv('UseData/WTB4WK.csv')
 
 BadTrips <- which(Trips$panel_year != Trips$year)
 Trips <- Trips[-BadTrips,]
