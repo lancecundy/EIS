@@ -34,6 +34,7 @@ colnames(Trips)[colnames(Trips)=="r"] <- "monthlyr"
 colnames(Trips)[colnames(Trips)=="value"] <- "CPI"
 colnames(Trips)[colnames(Trips)=="lagvalue"] <- "LagCPI"
 
+## Here we create the deflator
 Trips$Inflation <- Trips$CPI / Trips$LagCPI
 
 print("2")
@@ -44,7 +45,7 @@ ZeroTrips <- which(Trips$total_spent == 0)
 Trips <- Trips[-ZeroTrips,]
 
 ####
-
+ 
 MaxYear <- max(Trips$year)
 MaxCPIData <- Trips[which(Trips$year==MaxYear & Trips$month == 1),]
 MaxCPISmall <- MaxCPIData[c("region", "CPI")] 
@@ -52,11 +53,11 @@ MaxCPISmall <- MaxCPIData[c("region", "CPI")]
 UniqueMaxCPISmall <- unique(MaxCPISmall)
 colnames(UniqueMaxCPISmall)[colnames(UniqueMaxCPISmall) == 'CPI'] <- 'BaseCPI'
 
+## Sets base CPI value to 2014 for each region
 Trips <- merge(Trips, UniqueMaxCPISmall, by=c('region'))
 
+## Takes consumption to 2014 values
 Trips$real_total_spent <- Trips$total_spent * (Trips$BaseCPI / Trips$CPI)
-
-
 
 print("2.5")
 
@@ -85,26 +86,18 @@ print("2.5")
 
 #####
 
-
 Trips['week'] <- isoweek(Trips$purchase_date)
-
 
 WeeklyIR['week'] <- isoweek(WeeklyIR$DATE)
 WeeklyIR['year'] <- year(WeeklyIR$DATE)
 
-
-
 Trips <- merge(Trips, WeeklyIR, by=c('year', 'week'))
 Trips <- na.omit(Trips)
-
-
-
-
-
 
 BadWeeks <- which(Trips$week == 52 | Trips$week == 53 | Trips$week == 1)
 Trips <- Trips[-BadWeeks,]
 
+#?# Why does this start at 52 weeks???
 Trips['weekR'] <- Trips$week
 Trips['weekR'] <- ifelse(Trips$year == 2004, Trips$week + 52, Trips$weekR)
 Trips['weekR'] <- ifelse(Trips$year == 2005, Trips$week + 52+53, Trips$weekR)
@@ -145,6 +138,13 @@ Trips$year <- NULL
 
 print("4")
 
+## understanding whats going on
+###############################
+#a <- data.frame(Trips$household_code,Trips$weekR,Trips$CPI)
+#z <- setdiff(a, TripsCPI)
+###############################
+
+## Why is this average even needed???
 TripsCPI <- aggregate(Trips$CPI, by=list(Trips$household_code, Trips$weekR), FUN=mean)
 colnames(TripsCPI) <- c('household_code', 'weekR', 'CPI')
 TripsLagCPI <- aggregate(Trips$LagCPI, by=list(Trips$household_code, Trips$weekR), FUN=mean)
@@ -160,11 +160,12 @@ Trips <- merge(Trips, TripsCPI, by=c('household_code', 'weekR'))
 Trips <- merge(Trips, TripsLagCPI, by=c('household_code', 'weekR'))
 Trips <- merge(Trips, TripsInflation, by=c('household_code', 'weekR'))
 
-
+#?# Again, why the approx formula?
 Trips$r <- (Trips$WTB4WK * 0.01) - ((Trips$CPI / Trips$LagCPI) -1 )
 
 print("4.5")
 
+#?# Why take minimum month? First occurance of shopping?
 TripsMonth <- aggregate(Trips$month, by = list(Trips$household_code, Trips$weekR), FUN=min)
 colnames(TripsMonth) <- c('household_code', 'weekR', 'month')
 
@@ -249,6 +250,8 @@ rownames(Trips) <- 1:nrow(Trips)
 print("9")
 
 
+
+#?# How to make sense of these lags?
 ChangeLogC <- diff(Trips$LogC)
 ChangeLogC <- data.frame(ChangeLogC)
 ChangeLogC <- rbind('NA', ChangeLogC)
@@ -264,6 +267,8 @@ ChangeInf <- rbind('NA', ChangeInf)
 ChangeFS <- diff(Trips$household_size)
 ChangeFS <- data.frame(ChangeFS)
 ChangeFS <- rbind('NA', ChangeFS)
+
+#?# Takes previous household_code
 HC <- zoo(Trips$household_code)
 LagHC <- lag(HC, -1, na.pad=TRUE)
 LagHC <- data.frame(LagHC)
@@ -271,6 +276,8 @@ Trips <- cbind(Trips, LagHC, ChangeLogC, ChangeLogR, ChangeLogNomR, ChangeInf, C
 
 Trips$LagHC <- ifelse(Trips$household_code != Trips$LagHC, NA, Trips$household_code)
 
+
+#?# Why trow away all trips not matching?
 Trips <- na.omit(Trips)
 
 Trips$ChangeLogC <- as.numeric(as.character(Trips$ChangeLogC))
@@ -279,6 +286,7 @@ Trips$ChangeLogNomR <- as.numeric(as.character(Trips$ChangeLogNomR))
 Trips$ChangeInf <- as.numeric(as.character(Trips$ChangeInf))
 Trips$ChangeFS <- as.numeric(as.character(Trips$ChangeFS))
 
+#?# Arent we just returning the next value?
 Trips$LagLogC <- Trips$LogC - Trips$ChangeLogC
 Trips$LagLogR <- Trips$LogR - Trips$ChangeLogR
 Trips$LagLogNomR <- Trips$LogNomR - Trips$ChangeLogNomR

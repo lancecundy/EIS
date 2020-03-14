@@ -24,6 +24,8 @@ Trips4 <- Trips4[c('household_code', 'week', 'month', 'weekR', 'monthR', 'year',
 
 #print(unique(cbind(Trips4$year, Trips4$month)))
 
+
+## pick periods of interest
 Trips4_1a <- Trips4[which(Trips4$year == 2004 & Trips4$month == 2),]
 Beg1 <- unique(Trips4_1a$monthR)
 #Trips4_1b <- Trips4[which(Trips4$year == 2006 & Trips4$month == 8),]
