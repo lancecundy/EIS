@@ -28,7 +28,7 @@ dateSplitEnds <- c("2016-11-28", "2006-07-31", "2008-12-29", "2016-11-28")
 dateSplits <- cbind(period, dateSplitStarts, dateSplitEnds)
 
 # Source Kaplan code
-source(file.path(base.path, "Code/dCGKL_2018_code/gmmq.R"))
+source(file.path(base.path, "EIS/Code/dCGKL_2018_code/gmmq.R"))
 
 # Read in Dataset
 #estimationDataFileName <- file.path(base.path, "UseData/data_1week_sample05_ne_20200427.csv")
