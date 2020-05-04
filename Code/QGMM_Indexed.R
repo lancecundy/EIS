@@ -162,7 +162,7 @@ for (ii in 1:length(rateTypes)) {
     print(QGMMResults)
     
     #outputFileName <- file.path(base.path, paste0("Output/Phase2/QGMM_Weekly_1w_", rateVar, "_", timePeriod, ".csv"))
-    outputFileName <- file.path(base.path, paste0("EIS/output/Phase2/QGMM_Weekly_1w_", rateVar, "_", timePeriod, ".csv"))
+    outputFileName <- file.path(base.path, paste0("EIS/Output/Phase2/QGMM_Weekly_1w_", rateVar, "_", timePeriod, ".csv"))
     
     write_csv(QGMMResults, outputFileName)
     
