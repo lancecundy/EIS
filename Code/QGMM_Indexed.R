@@ -17,7 +17,7 @@ library(plm)
 library(tidyverse)
 
 #base.path <- "/Users/lancecundy/Documents/Research/Nielsen/EIS"
-base.path <- "xdisk/agalvao/mig2020/extra/agalvao/eis_nielsen"
+base.path <- "/xdisk/agalvao/mig2020/extra/agalvao/eis_nielsen"
 
 # What about 2017 data??
 rateTypes <- c("TB", "ST")
