@@ -28,7 +28,7 @@ dateSplitStarts <- c("2004-01-26", "2004-01-26", "2006-08-07", "2009-01-05")
 dateSplitEnds <- c("2016-11-28", "2006-07-31", "2008-12-29", "2016-11-28")
 dateSplits <- cbind(period, dateSplitStarts, dateSplitEnds)
 
-dateSplits <- dateSplits[1]
+dateSplits <- dateSplits[1,]
 
 # Source Kaplan code
 #source(file.path(base.path, "Code/dCGKL_2018_code/gmmq.R"))
