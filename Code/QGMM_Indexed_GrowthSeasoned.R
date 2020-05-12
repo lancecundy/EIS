@@ -39,7 +39,8 @@ source(file.path(base.path, "EIS/Code/dCGKL_2018_code/gmmq.R"))
 
 # Read in Dataset
 #estimationDataFileName <- file.path(base.path, "UseData/data_1week_sample05_ne_20200427.csv")
-estimationDataFileName <- file.path(base.path, "rafael/csv_output/estimation_data_monthly.csv")
+estimationDataFileName <- file.path(base.path, "rafael/csv_output/estimation_data_weekly_1w.csv")
+#estimationDataFileName <- file.path(base.path, "rafael/csv_output/estimation_data_monthly.csv")
 estimationData <- read_csv(estimationDataFileName)
 # There were some NAs in the first two rows of the data
 estimationData <- estimationData[-1:-2, ]
@@ -180,7 +181,8 @@ for (ii in 1:length(rateTypes)) {
     print(QGMMResults)
     
     #outputFileName <- file.path(base.path, paste0("Output/Phase2/QGMM_Weekly_1w_", rateVar, "_", timePeriod, ".csv"))
-    outputFileName <- file.path(base.path, paste0("EIS/Output/Phase2/QGMM_Monthly_", rateVar, "_GrowthSeasoned_", timePeriod, ".csv"))
+    outputFileName <- file.path(base.path, paste0("EIS/Output/Phase2/QGMM_Weekly_1w", rateVar, "_GrowthSeasoned_", timePeriod, ".csv"))
+    #outputFileName <- file.path(base.path, paste0("EIS/Output/Phase2/QGMM_Monthly_", rateVar, "_GrowthSeasoned_", timePeriod, ".csv"))
     
     write_csv(QGMMResults, outputFileName)
     
