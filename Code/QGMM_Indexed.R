@@ -37,7 +37,7 @@ source(file.path(base.path, "EIS/Code/dCGKL_2018_code/gmmq.R"))
 
 # Read in Dataset
 #estimationDataFileName <- file.path(base.path, "UseData/data_1week_sample05_ne_20200427.csv")
-estimationDataFileName <- file.path(base.path, "rafael/csv_output/estimation_data_weekly_1m.csv")
+estimationDataFileName <- file.path(base.path, "rafael/csv_output/unseasonal_consumption/estimation_data_monthly_1m.csv")
 estimationData <- read_csv(estimationDataFileName)
 # There were some NAs in the first two rows of the data
 estimationData <- estimationData[-1:-2, ]
