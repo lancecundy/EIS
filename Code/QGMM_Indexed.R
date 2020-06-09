@@ -37,7 +37,7 @@ source(file.path(base.path, "EIS/Code/dCGKL_2018_code/gmmq.R"))
 
 # Read in Dataset
 #estimationDataFileName <- file.path(base.path, "UseData/data_1week_sample05_ne_20200427.csv")
-estimationDataFileName <- file.path(base.path, "rafael/csv_output/seasonal_consumption_newest/estimation_data_quarterly_ds_1q.csv")
+estimationDataFileName <- file.path(base.path, "rafael/csv_output/seasonal_consumption_newest/estimation_data_monthly_1m.csv")
 estimationData <- read_csv(estimationDataFileName)
 # There were some NAs in the first two rows of the data
 estimationData <- estimationData[-1:-2, ]
@@ -167,7 +167,7 @@ for (ii in 1:length(rateTypes)) {
     print(QGMMResults)
     
     #outputFileName <- file.path(base.path, paste0("Output/Phase2/QGMM_Weekly_1w_", rateVar, "_", timePeriod, ".csv"))
-    outputFileName <- file.path(base.path, paste0("EIS/Output/Phase2/QGMM_quarterly_ds_1q_", rateVar, "_seasonal_consumption_newest_", timePeriod, ".csv"))
+    outputFileName <- file.path(base.path, paste0("EIS/Output/Phase2/QGMM_monthly_1m_", rateVar, "_seasonal_consumption_newest_", timePeriod, ".csv"))
     
     write_csv(QGMMResults, outputFileName)
     
